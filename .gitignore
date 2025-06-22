@@ -1,2 +1,7 @@
-/node_modules
-/.idea
+/node_modules/
+rust/Cargo.lock
+.idea
+install
+.DS_Store
+target/
+/venv

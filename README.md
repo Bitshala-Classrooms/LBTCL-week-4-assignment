@@ -2,7 +2,20 @@
 
 ## Overview
 
-This week, you will learn how to create a timelocked transaction and add an OP_RETURN output to a Bitcoin transaction. You will write a bash script that creates a timelocked transaction where an employer pays an employee after a certain number of blocks have been mined. The employee will then spend the funds to a new address and add an OP_RETURN output to the transaction.
+In this fourth week you will:
+1. **Create** three wallets (Miner, Employee, and Employer) on regtest and fund them.
+2. **Build** a timelocked funding transaction where Employer pays Employee 40 BTC, locked until block 500.
+3. **Mine** up to block 500, broadcast the timelocked funding tx, and report balances.
+4. **Craft** a spending transaction by Employee that:
+5. **Sends** the 40 BTC to a new Employee address.
+6. **Adds** an OP_RETURN output containing the ASCII string: `I got my salary, I am rich`
+7. **Broadcast**, confirm, and report final balances.
+8. **Output** the two txids (funding and spending) to `out.txt`.
+9. **Target Locations** for the solution code for each languages are given below:
+   1. Bash: [solution.sh](./bash/solution.sh)
+   2. Javascript: [index.js](./javascript/index.js)
+   3. Python: [main.py](./python/main.py)
+   4. Rust: [main.rs](./rust/src/main.rs)
 
 ## Problem Statement
 
@@ -15,7 +28,7 @@ In the following exercise, we go through a workflow where an `Employee` is getti
 
 ## Solution Requirements
 
-You need to write a bash script that will do the following:
+Implement the following tasks in exactly one of the language-specific directories (`bash`, `javascript`, `python`, or `rust`):
 
 ### Setting up a TimeLock contract
 
@@ -48,9 +61,9 @@ Output the txid of the timelocked funding transaction and the txid of the spendi
 
 - Write your solution in `solution.sh`. Make sure to include comments explaining each step of your code.
 - Commit your changes and push to the main branch:
-    - Add your changes by running `git add solution.sh`.
-    - Commit the changes by running `git commit -m "Solution"`.
-    - Push the changes by running `git push origin main`.
+  - Add your changes by running `git add solution.sh`.
+  - Commit the changes by running `git commit -m "Solution"`.
+  - Push the changes by running `git push origin main`.
 - The autograder will run your script against a test script to verify the functionality.
 - Check the status of the autograder on the Github Classroom portal to see if it passed successfully or failed. Once you pass the autograder with a score of 100, you have successfully completed the challenge.
 - You can submit multiple times before the deadline. The last submission before the deadline will be considered your final submission.
@@ -59,36 +72,55 @@ Output the txid of the timelocked funding transaction and the txid of the spendi
 ## Local Testing
 
 ### Prerequisites
+
+| Language       | Prerequisite packages       |
+| -------------- | --------------------------- |
+| **Bash**       | `jq`, `curl`, `wget`, `tar` |
+| **JavaScript** | Node.js ≥ 20, `npm`         |
+| **Python**     | Python ≥ 3.9                |
+| **Rust**       | Rust stable toolchain       |
+
+
 - Install `jq` tool for parsing JSON data if you don't have it installed.
 - Install Node.js and npm to run the test script.
 - Node version 20 or higher is recommended. You can install Node.js using the following command:
   ```
   curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh | bash
   source ~/.nvm/nvm.sh
-  nvm install 20
+  nvm install --lts
   ```
 - Install the required npm packages by running `npm install`.
 
-### Testing Steps
-- Start your Bitcoin Core node with the `bitcoin.conf` file with the following parameters:
-  ```
-  regtest=1
-  fallbackfee=0.0001
-  server=1
-  rest=1
-  txindex=1
-  rpcauth=alice:88cae77e34048eff8b9f0be35527dd91$d5c4e7ff4dfe771808e9c00a1393b90d498f54dcab0ee74a2d77bd01230cd4cc
-  ```
-- Run your script using the command `/bin/bash solution.sh`.
-- Run the test script using the command `npm run test`.
+### Local Testing Steps
+It's a good idea to run the whole test locally to ensure your code is working properly.
+- Uncomment the specific line in [run.sh](./run.sh) corresponding to your language of choice.
+- Grant execution permission to [test.sh](./test.sh), by running `chmod +x ./test.sh`.
+- Execute `./test.sh`.
 - The test script will run your script and verify the output. If the test script passes, you have successfully completed the challenge and are ready to submit your solution.
 
+> **Note:** There is a pre-cooked setup script available [here](./setup-bitcoin-node.sh) to download and start bitcoind. You may use that script for all local testing purposes.
+
 ### Common Issues
-- Make sure Bitcoin Core is running before running the test script. Your submission should not stop the Bitcoin Core daemon at any point.
-- Make sure your `bitcoin.conf` file is correctly configured with the required parameters.
+- Your submission should not stop the Bitcoin Core daemon at any point.
 - Linux and MacOS are the recommended operating systems for this challenge. If you are using Windows, you may face compatibility issues.
 - The autograder will run the test script on an Ubuntu 22.04 environment. Make sure your script is compatible with this environment.
 - If you are unable to run the test script locally, you can submit your solution and check the results on the Github.
+
+## Submission
+
+- Commit all code inside the appropriate language directory and the modified `run.sh`.
+  ```
+  git add .
+  git commit -m "Week 2 solution"
+  ```
+- Push to the main branch:
+  ```
+    git push origin main
+  ```
+- The autograder will run your script against a test script to verify the functionality.
+- Check the status of the autograder on the Github Classroom portal to see if it passed successfully or failed. Once you pass the autograder with a score of 100, you have successfully completed the challenge.
+- You can submit multiple times before the deadline. The latest submission before the deadline will be considered your final submission.
+- You will lose access to the repository after the deadline.
 
 ## Resources
 
